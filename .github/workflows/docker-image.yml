@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Sync Docker image
+      run: |
+        docker login -u ${{ secrets.DOCKER_USER }} -p  ${{ secrets.DOCKER_USER_PASSWORD }}
+        docker pull ghcr.io/warp-tech/warpgate && \
+        docker tag ghcr.io/warp-tech/warpgate zlzforever/warpgate && \
+        docker push zlzforever/warpgate
+      
