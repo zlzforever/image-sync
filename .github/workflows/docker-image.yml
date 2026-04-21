@@ -14,9 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Login docker regsitry
+      run: docker login -u ${{ secrets.DOCKER_USER }} -p  ${{ secrets.DOCKER_USER_PASSWORD }}    
     - name: Sync Docker image
       run: |
-        docker login -u ${{ secrets.DOCKER_USER }} -p  ${{ secrets.DOCKER_USER_PASSWORD }}
         docker pull ghcr.io/warp-tech/warpgate && \
         docker tag ghcr.io/warp-tech/warpgate zlzforever/warpgate && \
         docker push zlzforever/warpgate
